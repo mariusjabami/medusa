@@ -10,7 +10,7 @@ void *read_dir(const char *dir, int *num_of_dir, char (*files)[100]){
 
 	const struct dirent *File;
 
-	if(!dir){ 
+	if(!stack){ 
 		perror(dir);
 		return NULL;
 	}
@@ -19,7 +19,7 @@ void *read_dir(const char *dir, int *num_of_dir, char (*files)[100]){
 
 		if (File->d_type == DT_REG) {
 			if (File->d_name[0] != '.') {
-				snprintf(files[*num_of_dir], 100, "%s%s", dir, File->d_name);
+				snprintf(files[*num_of_dir], 100, "%s", File->d_name);
 				(*num_of_dir)++;
 			}
 		}
