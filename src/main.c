@@ -5,6 +5,7 @@
 #include "../includes/scanner.h"
 #include "../includes/parser.h"
 #include "../includes/utils.h"
+#include "../includes/server.h"
 
 int main(int argc, char **argv){
 
@@ -18,6 +19,7 @@ int main(int argc, char **argv){
 
 	if (str_equals(argv[1], "run")) {
 		run(argv[2]);
+		analyze_with_medusa("out.txt", "relatorio.md", "AIzaSyDkcwCPbSP4r8i3S6XLQtLRGQPJjVDwkGQ");
 	}
 
 	return 0;

@@ -25,6 +25,13 @@ void run(char *path){
 
 	read_dir(path, &num_of_dir, dirs);
 
+	FILE *out = fopen("out.txt", "w");
+	if (!out) {
+	
+		perror("out.txt");
+		return;
+	}
+
 	for (int i = 0; i < num_of_dir; i++) {
 
 		char fullpath[256];
@@ -39,10 +46,17 @@ void run(char *path){
 		
 		print_f(100, ptr, text);
 
+		for (int j = 0; j < ptr; j++) {
+
+			fprintf(out, "%s", text[j]);
+		
+		}
+
 		printf(" \nEND FILE: %s\n", dirs[i]);
 
 
 	}
+	fclose(out);
 
 	free(text);
 	free(dirs);
