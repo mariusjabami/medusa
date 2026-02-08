@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
          *  - "relatorio.md" : final markdown report
          *  - API_KEY        : authentication token
          */
-        analyze_with_medusa("out.txt", "relatorio.md", API_KEY);
+        analyze_with_medusa("out.txt", "relatorio.md", "AIzaSyDkcwCPbSP4r8i3S6XLQtLRGQPJjVDwkGQ", argv[3]);
     }
 
     return 0;
