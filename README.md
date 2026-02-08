@@ -1,123 +1,146 @@
-# MEDUSA
+# MEDUSA — A High-Performance CLI AI Agent Built in C
 
-**MEDUSA** is an **open-source** automated code analysis tool, designed for **hackathons**, combining **native C** and **Gemini AI** to generate **critical, sarcastic, and highly detailed reports** on source code.
+## Overview
 
----
+**MEDUSA** is a lightweight, high-performance command-line AI agent designed for deep file analysis, structured reporting, and intelligent reasoning over large codebases and documents.
 
-## 🎯 Objective
+Built entirely in **C**, MEDUSA prioritizes **speed, low memory usage, and maximum portability**, making it ideal for minimal environments where most AI tools simply cannot run.
 
-- Automate directory-wide code analysis  
-- Detect errors, assess severity, and programmer level  
-- Provide **strategic, sarcastic, and educational feedback**  
-- Showcase **advanced integration of C with AI**  
+Rather than being another chat interface, MEDUSA acts as an **analytical engine** — reading directories, parsing files, synthesizing reports, and producing actionable insights through the **Gemini 3 API**.
 
 ---
 
-## ⚡ Why C?
+## Why C?
 
-- **Optimization**: full control over memory and performance  
-- **Portability**: runs on any minimal environment with `libc`  
-- **Efficient code**: for programmers who value performance and clean design  
+MEDUSA was intentionally developed in **C** for several reasons:
 
----
+- ⚡ **Maximum performance and low latency**
+- 🧠 **Full control over memory and I/O**
+- 🌍 **Runs on virtually any environment** with a minimal C standard library
+- 🛠️ Ideal for developers who value **optimization, efficiency, and system-level design**
 
-## 🛠 Main Features
-
-- **Directory and file scanning**  
-  - Ignores hidden files  
-  - Aggregates code in memory for analysis  
-
-- **Report generation via Gemini API**  
-  - Prompt built with Medusa's personality: sarcastic and precise  
-  - JSON response converted into **clean, readable report**  
-
-- **Multilingual**: supports Portuguese (`pt`) or English (`en`)  
-
-- **Configurable**:  
-  - Maximum number of files and lines per file  
-  - Report buffer size  
-
-- **Secure and Open-source**:  
-  - API key is never exposed  
-  - Compiled binary is ready-to-run and secure  
+This makes MEDUSA suitable for servers, containers, embedded systems, and minimal Linux environments.
 
 ---
 
-## 🔄 Technical Flow
+## Gemini 3 Integration
 
-```
-+-------------------+
-| Code Directory    |
-+-------------------+
-          |
-          v
-+-------------------+
-| run() Function    |
-| Reads files and   |
-| aggregates in    |
-| out.txt           |
-+-------------------+
-          |
-          v
-+-------------------+
-| Prompt Construction|
-| for Gemini AI      |
-| (Medusa Personality)|
-+-------------------+
-          |
-          v
-+-------------------+
-| Send to Gemini AI |
-+-------------------+
-          |
-          v
-+-------------------+
-| Extract JSON to   |
-| clean text        |
-+-------------------+
-          |
-          v
-+-------------------+
-| Final Report      |
-| relatorio.md      |
-+-------------------+
-```
+MEDUSA uses **Gemini 3** as its core reasoning engine.
+
+Gemini 3 is responsible for:
+- Advanced semantic analysis of files
+- Cross-file reasoning and pattern detection
+- Generating structured, human-readable reports
+- Context-aware synthesis over large datasets
+
+The local C engine handles:
+- File traversal and directory analysis
+- Efficient buffering and chunked reading
+- Prompt construction and response handling
+- Output formatting and report generation
+
+This hybrid architecture combines **low-level performance** with **state-of-the-art AI reasoning**.
 
 ---
 
-## 🏃‍♂️ How to Run
+## API Key Handling & Security Model
+
+MEDUSA follows a **compile-time API key embedding model**, suitable for low-level CLI tools.
+
+### Workflow:
+1. The developer inserts their **own Gemini API key directly into the source code**
+2. The project is compiled using `make`
+3. The final executable binary is generated
+4. The API key can then be **removed from the source code**
+5. The binary continues to function normally
+
+### Why this works:
+- The API key is **not stored in plain text**
+- It becomes part of the compiled binary data
+- It is not visible or accessible during runtime
+- Extracting it would require **non-trivial reverse engineering**
+
+This approach avoids runtime configuration complexity and ensures:
+- Simplicity
+- Portability
+- No external configuration files
+- No environment variable dependency
+
+Each user compiles MEDUSA with **their own API key**, maintaining full ownership and security.
+
+---
+
+## Adjustable Analysis Engine
+
+MEDUSA is designed to be **fully configurable at compile-time and runtime**, including:
+
+- Maximum file size to analyze
+- Directory traversal depth
+- Input buffer sizes
+- Report verbosity
+- Output formats (plain text / markdown)
+
+This allows MEDUSA to scale from **small personal projects** to **large repositories** and datasets.
+
+---
+
+## Open Source Philosophy
+
+MEDUSA is **fully open source**.
+
+- Transparent implementation
+- Auditable logic
+- Hackable and extensible
+- Encourages contributions and experimentation
+
+The project is designed to be both:
+- A **practical tool**
+- A **learning resource** for systems programmers interested in AI integration
+
+---
+
+## Origin of the Name
+
+The name **MEDUSA** was chosen for both symbolic and personal reasons.
+
+In mythology, Medusa possesses **many eyes**, seeing everything at once — a perfect metaphor for deep, multi-perspective analysis.
+
+Additionally, the name is a tribute to a close friend who inspired the project’s mindset:
+- Awareness
+- Precision
+- Relentless observation
+
+MEDUSA analyzes not just files — it sees *patterns*.
+
+---
+
+## Developer Diary (Hackathon Notes)
+
+During development, several system-level challenges were encountered, including:
+- Correct handling of relative vs absolute directory paths
+- Safe recursive traversal of file systems
+- Efficient reading of large files without excessive memory usage
+- Prompt size control and chunking strategies
+
+These challenges directly influenced MEDUSA’s final architecture, resulting in a more robust and optimized tool.
+
+---
+
+## Build & Run
 
 ```bash
-# Compile with Makefile
 make
-
-# Run analysis
-./medusa run ./my_project en
+./medusa run ./project_directory
 ```
 
-- `./my_project` → directory containing the code to analyze  
-- `en` → generates report in English (`pt` for Portuguese)  
-
-The binary handles the **entire workflow automatically**: reading files, sending to AI, and generating the final report.
+All compilation is handled through the provided **Makefile**, ensuring a simple and reproducible build process.
 
 ---
 
-## ⚙️ Customization
+## Final Thoughts
 
-- Adjust **BUFFER_SIZE**, maximum number of files, and lines per file as needed  
-- Works for small or large projects  
-- Generates detailed reports even for directories with many files  
+MEDUSA demonstrates that cutting-edge AI does not require heavyweight frameworks.
 
----
+By combining **Gemini 3’s reasoning power** with **C-level performance**, MEDUSA delivers a unique, efficient, and scalable approach to AI-driven analysis.
 
-## 🏆 Value for Hackathon Judges
-
-- **Innovation**: native C + Gemini AI, a rare combination for hackathons  
-- **Immediate execution**: ready-to-run binary, zero configuration  
-- **Clarity**: critical, sarcastic report, easy to read  
-- **Flexible and audit-friendly**: open-source, adjustable, and secure  
-- **Visual impact**: clear workflow and strategic report, easy to present in a pitch  
-
----
-
-**MEDUSA** turns any code directory into a **strategic, educational, and entertaining report**, demonstrating technical mastery, optimization, and advanced AI integration.
+This project is not just a hackathon submission — it is a statement about performance, control, and intelligent software design.
