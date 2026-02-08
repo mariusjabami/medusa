@@ -77,7 +77,7 @@ char *send_to_gemini(const char *prompt, const char *api_key) {
     headers = curl_slist_append(headers, header_key);
 
     curl_easy_setopt(curl, CURLOPT_URL,
-        "https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent");
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent");
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
     // Escape double quotes and backslashes in the prompt
