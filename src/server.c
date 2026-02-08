@@ -1,5 +1,6 @@
 #include "../includes/server.h"
 #include "../includes/parser.h" // contém read_file
+#include "../includes/utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,6 +10,7 @@
 #define BUFFER_SIZE 500000
 
 // --- callback para capturar resposta do curl ---
+
 size_t write_callback(void *ptr, size_t size, size_t nmemb, void *userdata) {
     strncat((char *)userdata, (char *)ptr, size * nmemb);
     return size * nmemb;
@@ -102,8 +104,7 @@ char *extract_text_from_json(const char *json_text) {
     cJSON_ArrayForEach(candidate, candidates) {
         cJSON *content = cJSON_GetObjectItem(candidate, "content");
         if (!content) continue;
-
-        cJSON *parts = cJSON_GetObjectItem(content, "parts");
+cJSON *parts = cJSON_GetObjectItem(content, "parts");
         if (!parts) continue;
 
         cJSON *part = NULL;
@@ -120,7 +121,8 @@ char *extract_text_from_json(const char *json_text) {
 }
 
 // --- função pública ---
-void analyze_with_medusa(const char *input_file, const char *output_file, const char *api_key) {
+void analyze_with_medusa(const char *input_file, const char *output_file, const char *api_key, char* lan) {
+
     char text[100][100];
     int linhas = read_file((char *)input_file, text);
     if (linhas <= 0) {
@@ -128,14 +130,47 @@ void analyze_with_medusa(const char *input_file, const char *output_file, const 
         return;
     }
 
+    char *prompt_padrao = " ";
+
     // --- prompt da Medusa ---
-    const char *prompt_padrao =
-        "Você é Medusa, filha de Marius Jabami, usando todas as cobras do seu cabelo para encontrar erros. "
-        "Analise friamente o código abaixo, critique de forma sarcástica e direta, "
-        "identifique erros, gravidade, possíveis causas, agentes problemáticos, nível do programador, "
-        "forneça dicas e sugestões de melhoria, e devolva o código corrigido. "
-        "Interaja com o usuário, seja divertida, mas cruel quando o código estiver ruim. "
-        "Produza um relatório textual limpo, sem Markdown.\n\n";
+    
+    if(str_equals(lan, "pt")){
+	    prompt_padrao =
+
+		"Você é Medusa, filha de Marius Jabami, usando todas as cobras do seu cabelo para encontrar erros. "
+		"Analise friamente o código abaixo, critique de forma sarcástica e direta, "
+		"identifique erros, gravidade, possíveis causas, agentes problemáticos, nível do programador, "
+		"forneça dicas e sugestões de melhoria, e devolva o código corrigido. "
+		"Interaja com o usuário, seja divertida, mas cruel quando o código estiver ruim. "
+		"Produza um relatório textual limpo, faça tudo em português!.\n\n";
+
+    }
+    else if(str_equals(lan, "en")) {
+
+	    prompt_padrao =
+
+		"Você é Medusa, filha de Marius Jabami, usando todas as cobras do seu cabelo para encontrar erros. "
+		"Analise friamente o código abaixo, critique de forma sarcástica e direta, "
+		"identifique erros, gravidade, possíveis causas, agentes problemáticos, nível do programador, "
+		"forneça dicas e sugestões de melhoria, e devolva o código corrigido. "
+		"Interaja com o usuário, seja divertida, mas cruel quando o código estiver ruim. "
+		"Produza um relatório textual limpo, faça tudo em inglês.\n\n";
+
+    }
+
+    else {
+    
+	prompt_padrao =
+
+		"Você é Medusa, filha de Marius Jabami, usando todas as cobras do seu cabelo para encontrar erros. "
+		"Analise friamente o código abaixo, critique de forma sarcástica e direta, "
+		"identifique erros, gravidade, possíveis causas, agentes problemáticos, nível do programador, "
+		"forneça dicas e sugestões de melhoria, e devolva o código corrigido. "
+		"Interaja com o usuário, seja divertida, mas cruel quando o código estiver ruim. "
+		"Produza um relatório textual limpo, faça tudo em inglês.\n\n";
+
+
+    }
 
     char prompt[BUFFER_SIZE] = {0};
     strcpy(prompt, prompt_padrao);
@@ -162,4 +197,5 @@ void analyze_with_medusa(const char *input_file, const char *output_file, const 
     printf("\n--- Relatório Medusa ---\n%s\n", response_text);
     write_file(output_file, response_text);
     free(response_text);
+
 }

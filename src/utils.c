@@ -19,7 +19,6 @@ void run(char *path){
 
 	int num_of_dir = 0;
 
-
 	char (*text)[100] = malloc(100 * sizeof *text);
 	char (*dirs)[100] = malloc(100 * sizeof *text);
 
@@ -36,29 +35,20 @@ void run(char *path){
 
 		char fullpath[256];
 
-
 		snprintf(fullpath, sizeof(fullpath), "%s/%s", path, dirs[i]);
 		
-		printf(" \nINIT FILE: %s\n", dirs[i]);
-
 		int ptr = read_file(fullpath, text);
 		if(ptr <= 0) continue;
 		
-		print_f(100, ptr, text);
-
 		for (int j = 0; j < ptr; j++) {
 
 			fprintf(out, "%s", text[j]);
 		
 		}
 
-		printf(" \nEND FILE: %s\n", dirs[i]);
-
-
 	}
 	fclose(out);
 
 	free(text);
 	free(dirs);
-
 }

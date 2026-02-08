@@ -2,22 +2,10 @@
 #include "../includes/parser.h"
 
 void print_f(int len, int num, char (*text)[len]){
-
-
 	for (int i = 0; i < num; i++) {
 	
 		printf("%s", text[i]);
 	}
-
-}
-
-void print_fdyn(int len, int num, char **dir){
-
-	for (int i = 0; i < num; i++) {
-	
-		printf("\n%s", dir[i]);
-	}
-
 }
 
 int read_file(char *file, char (*text)[100]){
@@ -33,9 +21,7 @@ int read_file(char *file, char (*text)[100]){
 	}
 
 	fclose(f);
-
 	return i;
-
 }
 
 
