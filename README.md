@@ -1,4 +1,4 @@
-# MEDUSA — A High-Performance CLI AI Agent Built in C
+# MEDUSA — High-Performance CLI AI Agent Built in C
 
 ## Overview
 
@@ -25,7 +25,10 @@ This makes MEDUSA suitable for servers, containers, embedded systems, and minima
 
 ## Gemini 3 Integration
 
-MEDUSA uses **Gemini 3** as its core reasoning engine.
+MEDUSA uses **Gemini 3** as its core reasoning engine, leveraging:
+
+- **libcurl** for efficient HTTP requests and secure communication with the Gemini API
+- **cJSON** for parsing and handling JSON responses seamlessly
 
 Gemini 3 is responsible for:
 - Advanced semantic analysis of files
@@ -48,6 +51,7 @@ This hybrid architecture combines **low-level performance** with **state-of-the-
 MEDUSA follows a **compile-time API key embedding model**, suitable for low-level CLI tools.
 
 ### Workflow:
+
 1. The developer inserts their **own Gemini API key directly into the source code**
 2. The project is compiled using `make`
 3. The final executable binary is generated
@@ -55,6 +59,7 @@ MEDUSA follows a **compile-time API key embedding model**, suitable for low-leve
 5. The binary continues to function normally
 
 ### Why this works:
+
 - The API key is **not stored in plain text**
 - It becomes part of the compiled binary data
 - It is not visible or accessible during runtime
@@ -117,19 +122,24 @@ MEDUSA analyzes not just files — it sees *patterns*.
 ## Developer Diary (Hackathon Notes)
 
 During development, several system-level challenges were encountered, including:
+
 - Correct handling of relative vs absolute directory paths
 - Safe recursive traversal of file systems
 - Efficient reading of large files without excessive memory usage
-- Prompt size control and chunking strategies
+- Managing dynamic memory and preventing segmentation faults
+- Controlling prompt size to Gemini 3 for large reports
 
-These challenges directly influenced MEDUSA’s final architecture, resulting in a more robust and optimized tool.
+These challenges directly influenced MEDUSA’s final architecture, resulting in a robust and optimized tool ready for hackathon evaluation.
 
 ---
 
 ## Build & Run
 
 ```bash
+# Compile all source files using Makefile
 make
+
+# Run MEDUSA on a target project directory
 ./medusa run ./project_directory
 ```
 
@@ -143,4 +153,4 @@ MEDUSA demonstrates that cutting-edge AI does not require heavyweight frameworks
 
 By combining **Gemini 3’s reasoning power** with **C-level performance**, MEDUSA delivers a unique, efficient, and scalable approach to AI-driven analysis.
 
-This project is not just a hackathon submission — it is a statement about performance, control, and intelligent software design.
+This project is not just a hackathon submission — it is a statement about **performance, control, and intelligent software design**.
