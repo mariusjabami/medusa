@@ -15,7 +15,7 @@ int main(int argc, char **argv){
 	if (str_equals(argv[1], "run")) {
 
 		run(argv[2]);
-		analyze_with_medusa("out.txt", "relatorio.md", "AIzaSyDkcwCPbSP4r8i3S6XLQtLRGQPJjVDwkGQ", argv[3]);
+		analyze_with_medusa("out.txt", "relatorio.md", "API_KEY", argv[3]);
 
 	}
 
